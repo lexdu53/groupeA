@@ -13,7 +13,7 @@ class ManageBDD
 
         try
         {
-            $bdd = new PDO('mysql:host=localhost;dbname=tpvoyage;charset=utf8', 'tpvoyage', 'tpvoyage123');
+            $bdd = new PDO('mysql:host=localhost:/run/mysqld/mysqld10.sock;dbname=tpvoyage;charset=utf8', 'tpvoyage', 'tpvoyage123');
         }
         catch (Exception $e)
         {
