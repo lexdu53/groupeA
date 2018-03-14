@@ -5,31 +5,14 @@
  * Date: 14/03/2018
  * Time: 12:06
  */
+header('Content-Type: application/json');
 
 include ("Vol/ManageBDD.php");
+include ("Vol/Engine.php");
 
-$connection = new ManageBDD();
-$bdd = $connection->connection();
+$engine = new Engine();
 
-$reponse = $bdd->query('SELECT * FROM vol');
-
-// On affiche chaque entrée une à une
-while ($donnees = $reponse->fetch())
-{
-?>
-    <p>
-
-    <strong>Vol</strong> : <?php echo $donnees['villedepart']." - ".$donnees['villearrive']; ?><br />
-
-    Dates :  au depart <?php echo $donnees['datedepart']; ?> - a l'arrivé : <?php echo $donnees['datearrive']; ?>  !<br />
+$engine->listerVols("","","","");
 
 
-   </p>
-
-<?php
-
-}
-
-
-$reponse->closeCursor(); // Termine le traitement de la requête
 ?>

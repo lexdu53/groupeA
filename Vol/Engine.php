@@ -11,6 +11,15 @@ class Engine
 
     function listerVols($dateDepart, $dateArrive,$villeDepart,$villeArrive){
 
+		$bdd = new ManageBDD();
+
+		if($dateDepart == NULL && $dateArrive == NULL && $villeDepart == NULL && $villeArrive == NULL ){
+			//Si on veut lister l'ensemble des vols de la base de données 
+			$return = json_encode($bdd->listerAllVols());
+
+		}
+
+		echo $return;
     }
 
     /**
@@ -19,5 +28,8 @@ class Engine
     function reserver($id){
 
     }
+
+
+
 
 }
