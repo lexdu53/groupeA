@@ -6,9 +6,16 @@
  * Time: 14:14
  */
 
+include ("Vol/ManageBDD.php");
+
 class Engine
 {
+    private $manageBdd;
 
+    function __construct() {
+        $this->managebdd=new ManageBDD();
+        $this->managebdd->connection();
+    }
     function listerVols($dateDepart, $dateArrive,$villeDepart,$villeArrive){
 
 		$bdd = new ManageBDD();
@@ -25,7 +32,24 @@ class Engine
     /**
      * @param $id
      */
-    function reserver($id){
+    function reserver($id,$nbPlaces){
+
+
+        switch ($this->manageBdd->select($id,$nbPlaces)){
+
+            case 1:
+                echo "Avion réservé";
+                break;
+
+            case 2:
+                echo "Il ne reste plus accès de place";
+                break;
+
+            default:
+                break;
+        }
+
+
 
     }
 

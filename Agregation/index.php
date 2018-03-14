@@ -8,7 +8,7 @@
 
 function calc($fonction, $arg1, $arg2)
 {
-    $myURL = "http://arnaudride.fr/webservices/iia/calc.php?function=".$fonction."&arg1=".$arg1."&arg2=".$arg2;
+    $myURL = "http://arnaudride.fr/webservices/tp/index.php";
     $myResponse = simplexml_load_file($myURL);
     if (isset($myResponse->resultat)) {
         return $myResponse->resultat; }
