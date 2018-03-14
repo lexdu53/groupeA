@@ -22,6 +22,8 @@ class ManageBDD
             echo "erreur";
         }
 
+        return $bdd;
+
     }
 
     /**
