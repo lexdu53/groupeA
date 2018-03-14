@@ -48,6 +48,22 @@ class ManageBDD
         }
     }
 
+    function getPlaceReserve($idVol){
+
+        $reponse = $this->bdd->query("SELECT * FROM reservation WHERE vol_id = $idVol");
+        $nbPlaceReserve = 0;
+
+        $array_final = array();
+        while ($donnees = $reponse->fetch())
+        {
+            $nbPlaceReserve = $nbPlaceReserve + $donnees['nbplace'];
+        }
+
+        return $nbPlaceReserve;
+
+        $reponse->closeCursor(); // Termine le traitement de la requête
+    }
+
 
     function listerAllVols(){
 
@@ -56,14 +72,14 @@ class ManageBDD
         $array_final = array();
         while ($donnees = $reponse->fetch())
         {
-
+            $nbPlaceRestante = $donnees['nbplace'] - $this->getPlaceReserve($donnees['id']);
             $array_to_json = array(
                 'ID' => $donnees['id'],
                 'Ville départ' => $donnees['villedepart'],
                 'Ville arrivé' => $donnees['villearrive'],
                 'Date départ' => $donnees['datedepart'],
                 'Date arrivé' => $donnees['datearrive'],
-                'Places restante / Nombre de places total' => "xx / ".$donnees['nbplace'],
+                'Places restante / Nombre de places total' => $nbPlaceRestante." / ".$donnees['nbplace'],
                 'Prix' => $donnees['prix']
             );
             array_push($array_final, $array_to_json);
@@ -72,5 +88,9 @@ class ManageBDD
         return $array_final;
         $reponse->closeCursor(); // Termine le traitement de la requête
     }
+
+
+    
+
 
 }
