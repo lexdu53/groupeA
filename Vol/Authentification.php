@@ -6,7 +6,12 @@
  * Time: 11:31
  */
 
-class Authentification
+ require_once '../php-jwt-master/src/JWT.php';
+ use Firebase\JWT\JWT;
+
+
+
+ class Authentification
 {
 
     /**
@@ -25,20 +30,16 @@ class Authentification
     }
 
     /**
-     * @param $token
-     */
-    function descryptToken($token,$key){
-
-        $decode=JWT::decode($token,$key,array('HS256'));
-        $this->analyseToken($decode);
-        return $decode;
-
-    }
-
-    /**
      * @param $decode
      */
-    function analyseToken($decode){
-        //$decode
+    function analyseToken($decode,$key){
+
+        $decode=JWT::decode($decode,$key,array('HS256'));
+        $this->analyseToken($decode);
+
+        if($decode['expe']<time()){//session encore bonne
+            return true;
+        }else return false;
+
     }
 }
