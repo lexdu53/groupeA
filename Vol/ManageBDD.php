@@ -43,6 +43,9 @@ class ManageBDD
                 $_SESSION['login'] = $donnees['login'];
                 $_SESSION['id'] = $donnees['id'];
 
+                $authentification = new Authentification();
+                $_SESSION['tokenUser'] = $authentification->generateToken($donnees['id'], $donnees['login']);
+
                 return true;
             }
             else{
