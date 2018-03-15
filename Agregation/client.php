@@ -8,9 +8,9 @@
 
 define('OAUTH2_CLIENT_ID', '');
 define('OAUTH2_CLIENT_SECRET', '');
-$authorizeURL = 'https://github.com/login/oauth/authorize';
-$tokenURL = 'https://github.com/login/oauth/access_token';
-$apiURLBase = 'https://api.github.com/';
+$authorizeURL = 'https://arnaudride.fr/webservices/tp/Agregation/client/oauth/authorize';
+$tokenURL = 'https://arnaudride.fr/webservices/tp/Agregation/client/login/oauth/access_token';
+$apiURLBase = 'https://api.arnaudride.fr/';
 session_start();
 // Start the login process by sending the user to Github's authorization page
 if(get('action') == 'login') {
