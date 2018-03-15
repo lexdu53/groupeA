@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-include("../Vol/ManageBDD.php");
+include ("Vol/ManageBDD.php");
 
 $etatConnexion = "Veuillez vous connecter";
 
