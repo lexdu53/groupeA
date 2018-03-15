@@ -30,6 +30,34 @@ class ManageBDD
 
     }
 
+    function userConnection($user,$password)
+    {
+
+        $reponse = $this->bdd->query("SELECT * FROM utilisateur WHERE login='$user'");
+        $donnees = $reponse->fetch();
+
+        if($donnees != NULL){
+            if(sha1($password) == $donnees['password']){
+
+                $_SESSION['prenom'] = $donnees['prenom'];
+                $_SESSION['nom'] = $donnees['nom'];
+                $_SESSION['login'] = $donnees['login'];
+                $_SESSION['id'] = $donnees['id'];
+
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+
+
+
     /**
      *
      */
@@ -67,7 +95,8 @@ class ManageBDD
 
     function listerAllVols(){
 
-        $reponse = $this->bdd->query("SELECT * FROM vol");
+
+        $reponse = $this->bdd->query("SELECT * FROM vol WHERE datedepart > NOW()");
 
         $array_final = array();
         while ($donnees = $reponse->fetch())
@@ -89,6 +118,31 @@ class ManageBDD
         $reponse->closeCursor(); // Termine le traitement de la requête
     }
 
+    function listerVols($dateDepart, $dateArrive,$villeDepart,$villeArrive){
+
+
+
+        $reponse = $this->bdd->query("SELECT * FROM vol WHERE datedepart > NOW()");
+
+        $array_final = array();
+        while ($donnees = $reponse->fetch())
+        {
+            $nbPlaceRestante = $donnees['nbplace'] - $this->getPlaceReserve($donnees['id']);
+            $array_to_json = array(
+                'ID' => $donnees['id'],
+                'Ville départ' => $donnees['villedepart'],
+                'Ville arrivé' => $donnees['villearrive'],
+                'Date départ' => $donnees['datedepart'],
+                'Date arrivé' => $donnees['datearrive'],
+                'Places restante / Nombre de places total' => $nbPlaceRestante." / ".$donnees['nbplace'],
+                'Prix' => $donnees['prix']
+            );
+            array_push($array_final, $array_to_json);
+        }
+
+        return $array_final;
+        $reponse->closeCursor(); // Termine le traitement de la requête
+    }
 
     
 

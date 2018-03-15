@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * Created by PhpStorm.
  * User: traversathomas
@@ -9,6 +10,9 @@ header('Content-Type: application/json');
 
 include ("Vol/ManageBDD.php");
 include ("Vol/Engine.php");
+
+
+
 
 $engine = new Engine();
 
