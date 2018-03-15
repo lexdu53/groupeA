@@ -30,8 +30,7 @@ class ManageBDD
 
     }
 
-    function userConnection($user,$password)
-    {
+    function userConnection($user,$password){
 
         $reponse = $this->bdd->query("SELECT * FROM utilisateur WHERE login='$user'");
         $donnees = $reponse->fetch();
@@ -56,13 +55,10 @@ class ManageBDD
     }
 
 
-
-
     /**
      *
      */
-    function selectVolById($id,$nbPlaces)
-    {
+    function selectVolById($id,$nbPlaces){
 
         $reponse = $this->bdd->query('SELECT * FROM vol WHERE id=$id');
 
@@ -95,7 +91,6 @@ class ManageBDD
 
     function listerAllVols(){
 
-
         $reponse = $this->bdd->query("SELECT * FROM vol WHERE datedepart > NOW()");
 
         $array_final = array();
@@ -119,9 +114,6 @@ class ManageBDD
     }
 
     function listerVols($dateDepart, $dateArrive,$villeDepart,$villeArrive){
-
-
-
         $reponse = $this->bdd->query("SELECT * FROM vol WHERE datedepart > NOW()");
 
         $array_final = array();
@@ -142,6 +134,10 @@ class ManageBDD
 
         return $array_final;
         $reponse->closeCursor(); // Termine le traitement de la requête
+    }
+
+    function updateKey($id,$key){
+        $this->bdd->query("UPDATE utilisateur SET theKey='$key' WHERE id=$id");
     }
 
     
