@@ -6,7 +6,12 @@
  * Time: 11:31
  */
 
-class Authentification
+ require_once '../php-jwt-master/src/JWT.php';
+ use Firebase\JWT\JWT;
+
+
+
+ class Authentification
 {
 
     /**
