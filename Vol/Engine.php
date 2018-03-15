@@ -48,8 +48,13 @@ class Engine
             default:
                 break;
         }
+    }
 
+    function valideSession($token,$id){
 
+        $authentificaton=new Authentification();
+        //$key = $this->manageBdd->selectKey($idsession);//id de session utilisateur
+        $authentificaton->analyseToken(token,$key);
 
     }
 

@@ -140,6 +140,10 @@ class ManageBDD
         $this->bdd->query("UPDATE utilisateur SET theKey='$key' WHERE id=$id");
     }
 
+    function selectKey($id){
+        return $this->bdd->query("SELECT theKey FROM utilisateur WHERE id=$id");
+    }
+
     
 
 
