@@ -23,7 +23,7 @@ session_start();
 		
 		//$myResponse = json_decode($myURL);
 		
-		//$objFromJson = "test";
+		$objFromJson = "test";
 		return $objFromJson; 
 		//}
 	}

@@ -20,8 +20,6 @@ class Engine
     
     function listerVols($dateDepart, $dateArrive,$villeDepart,$villeArrive){
 
-		//$bdd = new ManageBDD();
-
 		if($dateDepart == NULL && $dateArrive == NULL && $villeDepart == NULL && $villeArrive == NULL ){
 			//Si on veut lister l'ensemble des vols de la base de données sauf ceux déjà effectué 
 			$return = json_encode($this->manageBdd->listerAllVols());
@@ -57,7 +55,15 @@ class Engine
         $authentificaton=new Authentification();
         $key = $this->manageBdd->selectKey($idUser); //id de session utilisateur
         
-        return $authentificaton->analyseToken($_SESSION['tokenUser'],$key);
+        if($authentificaton->analyseToken($_SESSION['tokenUser'],$key)){
+        	// Si le token est expiré on kill la session
+        	//session_destroy();
+        	return true;
+        }
+        else{
+        	session_destroy();
+        	return false;
+        }
     }
 
 }

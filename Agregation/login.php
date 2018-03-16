@@ -53,7 +53,7 @@ else{
 		<title>Login to Air IIA</title>
 	</head>
 	<body>
-		<h3>Etat de votre connexion au sercice : <?php echo $etatConnexion; ?></h3>
+		<h3>Etat de votre connexion au sercice : <?php echo $etatConnexion; if(isset($_GET['token']) && $_GET['token'] == "expire") {echo " Token expiré";} ?></h3>
 		<form method="post" action="login.php">
 			<p>
 				<label for="login">Votre login :</label>

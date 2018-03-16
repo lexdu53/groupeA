@@ -22,7 +22,7 @@ session_start();
     function generateToken($id, $user, $key)
     {
         $token = array('ini' => time(),
-            'exp' => time() + (10), //            'exp' => time() + (60 * 60),
+            'exp' => time() + (20 * 60), //            'exp' => time() + (60 * 60),
             'id' => $id,
             'user' => $user);
         $jvt = JWT::encode($token, $key);
