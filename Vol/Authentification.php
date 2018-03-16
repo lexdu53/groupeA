@@ -39,6 +39,9 @@ session_start();
             $decode=JWT::decode($decode,$key,array('HS256'));
             $bool=true;
 
+        }catch(\Firebase\JWT\SignatureInvalidException $e){
+            echo "erreur d'URL";
+            $bool=false;
         }catch(\Firebase\JWT\ExpiredException $e){
             $bool=false;
         }
