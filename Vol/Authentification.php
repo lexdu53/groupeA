@@ -21,7 +21,7 @@ session_start();
     function generateToken($id, $user, $key)
     {
         $token = array('ini' => time(),
-            'exp' => time() + (60 * 60),
+            'exp' => time() + (10), //            'exp' => time() + (60 * 60),
             'id' => $id,
             'user' => $user);
         $jvt = JWT::encode($token, $key);
@@ -35,9 +35,8 @@ session_start();
     function analyseToken($decode,$key){
 
         $decode=JWT::decode($decode,$key,array('HS256'));
-        $this->analyseToken($decode);
-
-        if($decode['expe']<time()){//session encore bonne
+        $pro= get_object_vars($decode);
+        if($pro['exp']>time()){//session encore bonne
             return true;
         }else return false;
 
