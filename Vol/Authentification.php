@@ -5,8 +5,9 @@
  * Date: 14/03/2018
  * Time: 11:31
  */
+session_start();
 
- require_once '../php-jwt-master/src/JWT.php';
+ require_once (dirname(__FILE__).'/php-jwt-master/src/JWT.php');
  use Firebase\JWT\JWT;
 
 
@@ -17,14 +18,13 @@
     /**
      *
      */
-    function generateToken($id,$user)
+    function generateToken($id, $user, $key)
     {
-        $Key = uniqid();//mémoriser la clé
         $token = array('ini' => time(),
             'exp' => time() + (60 * 60),
             'id' => $id,
             'user' => $user);
-        $jvt = JWT::encode($token, $Key);
+        $jvt = JWT::encode($token, $key);
 
         return $jvt;
     }

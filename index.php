@@ -8,21 +8,25 @@ session_start();
  */
 header('Content-Type: application/json');
 
+
 include ("Vol/ManageBDD.php");
 include ("Vol/Engine.php");
-use Firebase\JWT\JWT;
-require_once './php-jwt-master/src/JWT.php';
-
-
-
+include ("Vol/Authentification.php");
 
 
 
 $engine = new Engine();
+
+if(!$engine->valideSession($_SESSION['id'])){
+    header('location: Agregation/login.php');
+}
+
+//$engine->valideSession();
+
+
 if(isset($_GET['function']) && $_GET['function'] == "listallvol")
 {
 	$engine->listerVols("","","","");
-	//echo "coucou";
 }
 
 

@@ -15,7 +15,7 @@ session_start();
 
 	function affichertouslesvols($fonction, $arg1, $arg2)
 	{
-		$myURL = "http://arnaudride.fr/webservices/tp/index.php?function=".$fonction."&arg1=".$arg1."&arg2=".$arg2;
+		$myURL = "https://arnaudride.fr/webservices/tp/index.php?function=".$fonction."&arg1=".$arg1."&arg2=".$arg2;
 		
 		$jsonFromURL = file_get_contents($myURL);
 		$objFromJson = json_decode($jsonFromURL);

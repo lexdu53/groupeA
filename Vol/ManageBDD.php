@@ -5,6 +5,7 @@
  * Date: 14/03/2018
  * Time: 11:58
  */
+session_start();
 
 class ManageBDD
 {
@@ -44,8 +45,12 @@ class ManageBDD
                 $_SESSION['id'] = $donnees['id'];
 
                 $authentification = new Authentification();
-                $_SESSION['tokenUser'] = $authentification->generateToken($donnees['id'], $donnees['login']);
+                $key = uniqid();//mémoriser la clé
 
+                $_SESSION['tokenUser'] = $authentification->generateToken($donnees['id'], $donnees['login'], $key);
+
+                $this->updateKey($_SESSION['id'], $key);
+                
                 return true;
             }
             else{
@@ -139,14 +144,15 @@ class ManageBDD
     }
 
     function updateKey($id,$key){
-        $this->bdd->query("UPDATE utilisateur SET theKey='$key' WHERE id=$id");
+        $this->bdd->exec("UPDATE utilisateur SET theKey='$key' WHERE id=$id");
     }
 
     function selectKey($id){
-        return $this->bdd->query("SELECT theKey FROM utilisateur WHERE id=$id");
-    }
+        $reponse = $this->bdd->query("SELECT * FROM utilisateur WHERE id=$id");
+        $donnees = $reponse->fetch();
 
-    
+        return $donnees['theKey'];
+    }
 
 
 }

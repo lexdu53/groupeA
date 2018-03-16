@@ -14,8 +14,8 @@ class Engine
     private $manageBdd;
 
     function __construct() {
-        $this->managebdd=new ManageBDD();
-        $this->managebdd->connection();
+        $this->manageBdd=new ManageBDD();
+        $this->manageBdd->connection();
     }
     
     function listerVols($dateDepart, $dateArrive,$villeDepart,$villeArrive){
@@ -52,16 +52,12 @@ class Engine
         }
     }
 
-    function valideSession($token,$id){
+    function valideSession($idUser){
 
         $authentificaton=new Authentification();
-        $key = $this->manageBdd->selectKey($_SESSION['id']);//id de session utilisateur
-        return $authentificaton->analyseToken(token,$key);
-
-
+        $key = $this->manageBdd->selectKey($idUser); //id de session utilisateur
+        
+        return $authentificaton->analyseToken($_SESSION['token'],$key);
     }
-
-
-
 
 }
