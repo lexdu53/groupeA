@@ -6,9 +6,11 @@
  * Time: 14:14
  */
 
+session_start();
 
 class Engine
 {
+
     private $manageBdd;
 
     function __construct() {
@@ -53,8 +55,9 @@ class Engine
     function valideSession($token,$id){
 
         $authentificaton=new Authentification();
-        //$key = $this->manageBdd->selectKey($idsession);//id de session utilisateur
-        $authentificaton->analyseToken(token,$key);
+        $key = $this->manageBdd->selectKey($_SESSION['id']);//id de session utilisateur
+        return $authentificaton->analyseToken(token,$key);
+
 
     }
 
