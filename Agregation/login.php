@@ -31,7 +31,8 @@ if(isset($_POST['login']) && $_POST['login'] != NULL && isset($_POST['pass']) &&
 
 
 if (isset($_SESSION['login']) && $_SESSION['login'] != NULL){
-	header('Content-Type: application/json');
+	//header('Content-Type: application/json');
+	header('location: index.php');
 
 
     $array_to_json = array('token' => $_SESSION['tokenUser']);

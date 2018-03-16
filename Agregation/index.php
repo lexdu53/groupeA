@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * Created by PhpStorm.
  * User: traversathomas
@@ -6,15 +7,30 @@
  * Time: 14:07
  */
 
-function calc($fonction, $arg1, $arg2)
-{
-    $myURL = "http://arnaudride.fr/webservices/tp/index.php";
-    $myResponse = simplexml_load_file($myURL);
-    if (isset($myResponse->resultat)) {
-        return $myResponse->resultat; }
-}
+// Check si l'utilisateur est connecté : 
+    if(!isset($_SESSION['login']) || $_SESSION['login'] == NULL){
+            header('location: login.php');
+        }
+
+
+	function affichertouslesvols($fonction, $arg1, $arg2)
+	{
+		$myURL = "http://arnaudride.fr/webservices/tp/index.php?function=".$fonction."&arg1=".$arg1."&arg2=".$arg2;
+		
+		$jsonFromURL = file_get_contents($myURL);
+		$objFromJson = json_decode($jsonFromURL);
+		//echo $objFromJson->access_token;
+		
+		//$myResponse = json_decode($myURL);
+		
+		//$objFromJson = "test";
+		return $objFromJson; 
+		//}
+	}
+
+
+	print_r(affichertouslesvols("listallvol", "2", "2"));
 
 
 
-
-echo calc("add", "2", "2");
+?>
