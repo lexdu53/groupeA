@@ -8,6 +8,7 @@
 session_start();
 
  require_once (dirname(__FILE__).'/php-jwt-master/src/JWT.php');
+ require_once (dirname(__FILE__).'/php-jwt-master/src/ExpiredException.php');
  use Firebase\JWT\JWT;
 
 
