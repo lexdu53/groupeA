@@ -13,23 +13,24 @@ session_start();
         }
 
 
-	function affichertouslesvols($fonction, $arg1, $arg2)
+	function affichertouslesvols($fonction)
 	{
-		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction."&arg1=".$arg1."&arg2=".$arg2;
+		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
 		
 		$jsonFromURL = file_get_contents($myURL);
 		$objFromJson = json_decode($jsonFromURL);
 		//echo $objFromJson->access_token;
 		
 		//$myResponse = json_decode($myURL);
-		
-		$objFromJson = "test";
+		//echo "et ta mere ? ";
+		//$objFromJson = "test";
 		return $objFromJson; 
+
 		//}
 	}
 
 
-	print_r(affichertouslesvols("listallvol", "2", "2"));
+	print_r(affichertouslesvols("listallvol"));
 
 
 
