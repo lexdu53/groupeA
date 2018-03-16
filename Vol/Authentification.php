@@ -39,7 +39,7 @@ session_start();
             $decode=JWT::decode($decode,$key,array('HS256'));
             $bool=true;
 
-        }catch(\Firebase\JWT\SignatureInvalidException $e){
+        }catch(\Firebase\JWT\ExpiredException $e){
             $bool=false;
         }
         return $bool;
