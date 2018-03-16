@@ -34,11 +34,18 @@ session_start();
      */
     function analyseToken($decode,$key){
 
-        $decode=JWT::decode($decode,$key,array('HS256'));
-        $pro= get_object_vars($decode);
-        if($pro['exp']>time()){//session encore bonne
+        try{
+            $decode=JWT::decode($decode,$key,array('HS256'));
+            $bool=true;
+
+        }catch(\Firebase\JWT\SignatureInvalidException $e){
+            $bool=false;
+        }
+        return $bool;
+        //$pro= get_object_vars($decode);
+       /* if($pro['exp']>time()){//session encore bonne
             return true;
-        }else return false;
+        }else return false;*/
 
     }
 }

@@ -24,7 +24,7 @@ class Engine
 
 		if($dateDepart == NULL && $dateArrive == NULL && $villeDepart == NULL && $villeArrive == NULL ){
 			//Si on veut lister l'ensemble des vols de la base de données sauf ceux déjà effectué 
-			$return = json_encode($this->$manageBdd->listerAllVols());
+			$return = json_encode($this->manageBdd->listerAllVols());
 
 		}
 
