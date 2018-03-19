@@ -1,2 +1,0 @@
-RewriteCond %{HTTP_HOST} ^arnaudride.fr$
-RewriteRule ^(.*) http://www.arnaudride.fr/$1  [QSA,L,R=301]
