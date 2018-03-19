@@ -21,7 +21,7 @@ class ManageBDD
 
         try
         {
-            $this->bdd = new PDO('mysql:host=192.168.1.22:3307;dbname=tpvoyage;charset=utf8', 'tpvoyage', 'tpvoyage123');
+            $this->bdd = new PDO('mysql:host=localhost:3307;dbname=tpvoyage;charset=utf8', 'tpvoyage', 'tpvoyage123');
         }
         catch (Exception $e)
         {
