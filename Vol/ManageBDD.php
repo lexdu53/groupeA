@@ -65,13 +65,14 @@ class ManageBDD
     /**
      *
      */
-    function selectVolById($id,$nbPlaces){
+    function selectVolById($id,$nbPlaces,$utilisateur_id){
 
         if (($this->getPlaceLibre($id)-$nbPlaces) >= 0) {
 
-            $requete = $this->bdd->prepare("INSERT INTO reservation (nbplace, vol_id) VALUES (:nbplace, :vol_id)");
+            $requete = $this->bdd->prepare("INSERT INTO reservation (nbplace, vol_id,utilisateur_id) VALUES (:nbplace, :vol_id, :utilisateur_id)");
             $requete->bindParam(':nbplace',$nbPlaces);
             $requete->bindParam(':vol_id',$id);
+            $requete->bindParam(':utilisateur_id',$utilisateur_id);
             if(($requete->execute())==0){
                 return 3;
             }else return 1;
@@ -111,6 +112,31 @@ class ManageBDD
 
         $reponse = $this->bdd->query("SELECT * FROM vol WHERE datedepart > NOW()");
 
+        $array_final = array();
+        while ($donnees = $reponse->fetch())
+        {
+            $nbPlaceRestante = $donnees['nbplace'] - $this->getPlaceReserve($donnees['id']);
+            $array_to_json = array(
+                'ID' => $donnees['id'],
+                'Ville départ' => $donnees['villedepart'],
+                'Ville arrivé' => $donnees['villearrive'],
+                'Date départ' => $donnees['datedepart'],
+                'Date arrivé' => $donnees['datearrive'],
+                'Places restante / Nombre de places total' => $nbPlaceRestante." / ".$donnees['nbplace'],
+                'Prix' => $donnees['prix']
+            );
+            array_push($array_final, $array_to_json);
+        }
+
+        return $array_final;
+        $reponse->closeCursor(); // Termine le traitement de la requête
+    }
+
+    function listerVolsByVille($villeDepart,$villeArrive){
+        $reponse = $this->bdd->prepare("SELECT * FROM vol WHERE datedepart > NOW() AND villedepart= :villedepart AND villearrive= :villearrive");
+        $reponse->bindValue(':villedepart',$villeDepart);
+        $reponse->bindValue(':villearrive',$villeArrive);
+        $reponse->execute();
         $array_final = array();
         while ($donnees = $reponse->fetch())
         {

@@ -25,10 +25,16 @@ class Engine
     
     function listerVols($dateDepart, $dateArrive,$villeDepart,$villeArrive){
 
+    //    else $dateDepart="";
 		if($dateDepart == NULL && $dateArrive == NULL && $villeDepart == NULL && $villeArrive == NULL ){
 			//Si on veut lister l'ensemble des vols de la base de données sauf ceux déjà effectué
 			$return = json_encode($this->manageBdd->listerAllVols());
 		}
+
+        if($villeDepart != NULL && $villeArrive != NULL && $dateDepart == NULL && $dateArrive == NULL ){
+            //Si on veut lister l'ensemble des vols de la base de données sauf ceux déjà effectué
+            $return = json_encode($this->manageBdd->listerVolsByVille($villeDepart,$villeArrive));
+        }
 
 		echo $return;
     }
@@ -36,11 +42,11 @@ class Engine
     /**
      * @param $id
      */
-    function reserver($id,$nbPlaces){
+    function reserver($id,$nbPlaces,$utilisateur_id){
 
 
 
-        switch ($this->manageBdd->selectVolById($id,$nbPlaces)){
+        switch ($this->manageBdd->selectVolById($id,$nbPlaces,$utilisateur_id)){
             case 1:
                 echo "Réservation OK";
                 break;
