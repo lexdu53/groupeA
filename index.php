@@ -20,11 +20,11 @@ $engine = new Engine();
 /*
 
 if(!isset($_SESSION['login']) || $_SESSION['login'] == NULL){
-    header('location: Agregation/login.php');
+    header('location: Agregation/Login.php');
 }
 
 if(!$engine->valideSession($_SESSION['id'])){
-    header('location: Agregation/login.php?token=expire');
+    header('location: Agregation/Login.php?token=expire');
 }
 
 */
