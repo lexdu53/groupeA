@@ -54,8 +54,22 @@ if(!isset($_SESSION['tokenUser']) || $_SESSION['tokenUser'] == NULL || !isset($_
         return $objFromJson;
     }
 
-	//print_r(affichertouslesvols("listallvol"));
+    function reservation_vol($fonction,$id,$NbPlaces)
+    {
+        $myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction."&login=".$_SESSION['login']."&token=".$_SESSION['tokenUser']."&id=".$id."&NbPlaces=".$NbPlaces;
+
+        $jsonFromURL = file_get_contents($myURL);
+        $objFromJson = json_decode($jsonFromURL, true);
+
+        //print_r($myURL);
+        checkErreur($objFromJson);
+
+        return $objFromJson;
+    }
+
+	print_r(affichertouslesvols("listallvol"));
 	print_r(affichertouslesvolsByVille("listallvol","Lyon","Paris"));
+    print_r(reservation_vol("reserv_vol",1,11));
 
 	if (isset($_POST['villeDepart']) && $_POST['villeDepart'] != NULL && isset($_POST['villeArrive']) && $_POST['villeArrive'] != NULL) {
         // Si on a envoyer le formulaire pour rechercher des vols 
