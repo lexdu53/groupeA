@@ -6,6 +6,8 @@ include("../Vol/Authentification.php");
 
 $disableChamps = "";
 
+
+
 function connexion()
 {
     if (isset($_GET['login']) && $_GET['login'] != NULL && isset($_GET['pass']) && $_GET['pass'] != NULL) {
