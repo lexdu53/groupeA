@@ -25,10 +25,16 @@ if(isset($_GET['token']) && $_GET['token'] != NULL && isset($_GET['login']) && $
 
 		// Code de l'api
 
-		if(isset($_GET['function']) && $_GET['function'] == "listallvol")
-		{
-			$engine->listerVols("","","","");
-		}
+
+        if(isset($_GET['function']) && $_GET['function'] == "listallvol" && !isset($_GET['villeDepart']) && !isset($_GET['villeArrive']) )
+        {
+            $engine->listerVols("","","","");
+        }
+
+        if(isset($_GET['function']) && $_GET['function'] == "listallvol" && isset($_GET['villeDepart']) && isset($_GET['villeArrive']))
+        {
+            $engine->listerVols("","",$_GET['villeDepart'],$_GET['villeArrive']);
+        }
 
 	}
 	else{
