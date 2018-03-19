@@ -46,10 +46,6 @@ session_start();
             $bool=false;
         }
         return $bool;
-        //$pro= get_object_vars($decode);
-       /* if($pro['exp']>time()){//session encore bonne
-            return true;
-        }else return false;*/
 
     }
 }

@@ -67,16 +67,18 @@ class ManageBDD
      */
     function selectVolById($id,$nbPlaces){
 
-        $reponse = $this->bdd->query('SELECT * FROM vol WHERE id=$id');
+        if (($this->getPlaceLibre($id)-$nbPlaces) >= 0) {
 
-        if ($reponse['nbplace'] - $nbPlaces != 0) {
-            $this->bdd->exec('INSERT INTO reservation (villedepart,villearrive,datedepart,datearrive) VALUES ($id,$nbPlaces)');
-
-            return 1;
+            $requete = $this->bdd->prepare("INSERT INTO reservation (nbplace, vol_id) VALUES (:nbplace, :vol_id)");
+            $requete->bindParam(':nbplace',$nbPlaces);
+            $requete->bindParam(':vol_id',$id);
+            if(($requete->execute())==0){
+                return 3;
+            }else return 1;
         } else {
-
             return 2;
         }
+        $requete->closeCursor();
     }
 
     function getPlaceReserve($idVol){
@@ -91,8 +93,17 @@ class ManageBDD
         }
 
         return $nbPlaceReserve;
-
         $reponse->closeCursor(); // Termine le traitement de la requête
+    }
+
+    function getPlaceLibre($idVol){
+
+        $reponse = $this->bdd->query("SELECT * FROM vol WHERE id = $idVol");
+        $donnees = $reponse->fetch();
+        return ($donnees['nbplace']-$this->getPlaceReserve($idVol));
+        $reponse->closeCursor(); // Termine le traitement de la requête
+
+
     }
 
 

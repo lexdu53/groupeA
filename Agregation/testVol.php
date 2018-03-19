@@ -6,33 +6,35 @@ session_start();
  * Date: 14/03/2018
  * Time: 14:07
  */
-include ("Vol/Engine.php");
-include ("Vol/Login.php");
-include ("Vol/Logout.php");
-
-en;
+/*ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);*/
 
 
-function affichertouslesvols($fonction)
+//header('Content-Type: application/json');
+
+
+include ("../Vol/Engine.php");
+
+$engine= new Engine();
+
+if(isset($_GET['function']) && $_GET['function'] == "listallvol")
 {
-    echo "In afficher tous les vols";
-    $myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
+    $myURL=$engine->listerVols("","","","");
+    return $myURL;
+}
 
-    //$jsonFromURL = file_get_contents($myURL);
-    //$objFromJson = json_decode($jsonFromURL);
-    //echo $objFromJson->access_token;
+if(isset($_GET['function']) && $_GET['function'] == "reserv_vol" && isset($_GET['id']) && isset($_GET['NbPlaces']))
+{
 
-    //$myResponse = json_decode($myURL);
-    //echo "et ta mere ? ";
-    //$objFromJson = "test";
-    return $objFromJson;
-
-    //}
+    $myURL=$engine->reserver($_GET['id'],$_GET['NbPlaces']);
+    return $myURL;
 }
 
 
-print_r(affichertouslesvols("listallvol"));
-
-
-
 ?>
+
+
+
+
+
