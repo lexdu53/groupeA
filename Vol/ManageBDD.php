@@ -5,7 +5,6 @@
  * Date: 14/03/2018
  * Time: 11:58
  */
-session_start();
 
 class ManageBDD
 {

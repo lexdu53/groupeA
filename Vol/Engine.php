@@ -6,9 +6,8 @@
  * Time: 14:14
  */
 
-session_start();
-set_include_path('.:/Applications/MAMP/bin/php/php7.1.8/lib/php');
-include("ManageBDD.php");
+//set_include_path('.:/Applications/MAMP/bin/php/php7.1.8/lib/php');
+//include("ManageBDD.php");
 
 ///include_path ="/Vol/ManageBDD.php";
 

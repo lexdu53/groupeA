@@ -1,5 +1,4 @@
 <?php 
-session_start();
 
 include("Vol/ManageBDD.php");
 include("Vol/Authentification.php");
