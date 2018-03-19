@@ -7,23 +7,26 @@ session_start();
  * Time: 14:07
  */
 include ("Vol/Engine.php");
+include ("Vol/Login.php");
+include ("Vol/Logout.php");
 
-// Check si l'utilisateur est connecté : 
+$login;
+// Check si l'utilisateur est connecté :
     if(!isset($_SESSION['login']) || $_SESSION['login'] == NULL){
-            header('location: login.php');
+            header('location: Login.php');
         }
 
     if(!$engine->valideSession($_SESSION['id'])){
-        header('location: Agregation/login.php?token=expire');
+        header('location: Agregation/Login.php?token=expire');
     }
-
 
 	function affichertouslesvols($fonction)
 	{
+	    echo "In afficher tous les vols";
 		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
 		
-		$jsonFromURL = file_get_contents($myURL);
-		$objFromJson = json_decode($jsonFromURL);
+		//$jsonFromURL = file_get_contents($myURL);
+		//$objFromJson = json_decode($jsonFromURL);
 		//echo $objFromJson->access_token;
 		
 		//$myResponse = json_decode($myURL);
