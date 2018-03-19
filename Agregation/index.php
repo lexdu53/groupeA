@@ -6,9 +6,14 @@ session_start();
  * Date: 14/03/2018
  * Time: 14:07
  */
+include ("Vol/Engine.php");
 
 
 // Check si l'utilisateur est connecté : 
+
+    if(!$engine->valideSession($_SESSION['id'])){
+        header('location: Agregation/login.php?token=expire');
+    }
 
 
 function connexionWebservices($user, $password)
