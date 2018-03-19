@@ -6,33 +6,44 @@ session_start();
  * Date: 14/03/2018
  * Time: 14:07
  */
-include ("Vol/Engine.php");
-include ("Vol/Login.php");
-include ("Vol/Logout.php");
-
-en;
+/*ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);*/
 
 
-function affichertouslesvols($fonction)
+header('Content-Type: application/json');
+
+
+include ("../Vol/Engine.php");
+
+$engine= new Engine();
+
+if(isset($_GET['function']) && $_GET['function'] == "listallvol" && !isset($_GET['villeDepart']) && !isset($_GET['villeArrive']) )
 {
-    echo "In afficher tous les vols";
-    $myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
-
-    //$jsonFromURL = file_get_contents($myURL);
-    //$objFromJson = json_decode($jsonFromURL);
-    //echo $objFromJson->access_token;
-
-    //$myResponse = json_decode($myURL);
-    //echo "et ta mere ? ";
-    //$objFromJson = "test";
-    return $objFromJson;
-
-    //}
+    $myURL=$engine->listerVols("","","","");
+    return $myURL;
 }
 
+if(isset($_GET['function']) && $_GET['function'] == "listallvol" && isset($_GET['villeDepart']) && isset($_GET['villeArrive']))
+{
+    //    $myURL=$engine->listerVols($dateDepart,$dateArrive,$villeDepart,$villeArrive);
+    $myURL=$engine->listerVols("","",$_GET['villeDepart'],$_GET['villeArrive']);
 
-print_r(affichertouslesvols("listallvol"));
+    return $myURL;
+}
+
+if(isset($_GET['function']) && $_GET['function'] == "reserv_vol" && isset($_GET['id']) && isset($_GET['NbPlaces']))
+{
+    $utilisateur_id=1;
+    $myURL=$engine->reserver($_GET['id'],$_GET['NbPlaces'], $utilisateur_id);
+    return $myURL;
+}
 
 
 
 ?>
+
+
+
+
+
