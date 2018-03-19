@@ -6,6 +6,9 @@ session_start();
  * Date: 14/03/2018
  * Time: 14:07
  */
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 if(!isset($_SESSION['tokenUser']) || $_SESSION['tokenUser'] == NULL || !isset($_SESSION['login']) || $_SESSION['login'] == NULL){
@@ -52,6 +55,6 @@ if(!isset($_SESSION['tokenUser']) || $_SESSION['tokenUser'] == NULL || !isset($_
     }
 
 	//print_r(affichertouslesvols("listallvol"));
-	print_r(affichertouslesvolsByVille("listallvol","Paris","Lyon"));
+	print_r(affichertouslesvolsByVille("listallvol","Lyon","Paris"));
 
 ?>
