@@ -17,6 +17,8 @@ include ("Vol/Authentification.php");
 
 $engine = new Engine();
 
+/*
+
 if(!isset($_SESSION['login']) || $_SESSION['login'] == NULL){
     header('location: Agregation/login.php');
 }
@@ -25,7 +27,7 @@ if(!$engine->valideSession($_SESSION['id'])){
     header('location: Agregation/login.php?token=expire');
 }
 
-
+*/
 
 //$engine->valideSession();
 

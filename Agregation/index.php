@@ -30,7 +30,7 @@ function connexionWebservices($user, $password)
 		$objFromJson = json_decode($jsonFromURL);
 		//echo $objFromJson->access_token;
 		
-echo $jsonFromURL;
+		//echo $jsonFromURL;
 
 		//$myResponse = json_decode($myURL);
 		//echo "et ta mere ? ";
