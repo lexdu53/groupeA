@@ -67,8 +67,8 @@ if(!isset($_SESSION['tokenUser']) || $_SESSION['tokenUser'] == NULL || !isset($_
         return $objFromJson;
     }
 
-	//print_r(affichertouslesvols("listallvol"));
-	//print_r(affichertouslesvolsByVille("listallvol","Lyon","Paris"));
+	print_r(affichertouslesvols("listallvol"));
+	print_r(affichertouslesvolsByVille("listallvol","Lyon","Paris"));
     print_r(reservation_vol("reserv_vol",1,11));
 
 ?>
