@@ -18,33 +18,6 @@ include ("Vol/Engine.php");
     }
 
 
-<<<<<<< HEAD
-function connexionWebservices($user, $password)
-	{
-
-		//CURL PHP POUR ENVOYER LES LOGINS
-
-
-		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
-		
-
-		//HTTPS AVEC FILE_GET_CONTENTS, JE CROIS CA MARCHE PAS
-		$jsonFromURL = file_get_contents($myURL);
-		$objFromJson = json_decode($jsonFromURL);
-		//echo $objFromJson->access_token;
-		
-		//echo $jsonFromURL;
-
-		//$myResponse = json_decode($myURL);
-		//echo "et ta mere ? ";
-		//$objFromJson = "test";
-		return $objFromJson; 
-	}
-
-
-
-=======
->>>>>>> cf50514c585fbd6493a032bbe25fe3ca7e8bc01b
 	function affichertouslesvols($fonction)
 	{
 		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
