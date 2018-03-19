@@ -21,7 +21,7 @@ class ManageBDD
 
         try
         {
-            $this->bdd = new PDO('mysql:host=192.168.1.22:3307;dbname=tpvoyage;charset=utf8', 'tpvoyage', 'tpvoyage123');
+            $this->bdd = new PDO('mysql:host=localhost:3307;dbname=tpvoyage;charset=utf8', 'tpvoyage', 'tpvoyage123');
         }
         catch (Exception $e)
         {
@@ -39,19 +39,12 @@ class ManageBDD
         if($donnees != NULL){
             if(sha1($password) == $donnees['password']){
 
-                $_SESSION['prenom'] = $donnees['prenom'];
-                $_SESSION['nom'] = $donnees['nom'];
-                $_SESSION['login'] = $donnees['login'];
-                $_SESSION['id'] = $donnees['id'];
-
                 $authentification = new Authentification();
                 $key = uniqid();//mémoriser la clé
-
-                $_SESSION['tokenUser'] = $authentification->generateToken($donnees['id'], $donnees['login'], $key);
-
-                $this->updateKey($_SESSION['id'], $key);
+                $tokenUser = $authentification->generateToken($donnees['id'], $donnees['login'], $key);
+                $this->updateKey($donnees['login'], $key);
                 
-                return true;
+                return $tokenUser;
             }
             else{
                 return false;
@@ -143,12 +136,12 @@ class ManageBDD
         $reponse->closeCursor(); // Termine le traitement de la requête
     }
 
-    function updateKey($id,$key){
-        $this->bdd->exec("UPDATE utilisateur SET theKey='$key' WHERE id=$id");
+    function updateKey($loginUser,$key){
+        $this->bdd->exec("UPDATE utilisateur SET theKey='$key' WHERE login='$loginUser'");
     }
 
-    function selectKey($id){
-        $reponse = $this->bdd->query("SELECT * FROM utilisateur WHERE id=$id");
+    function selectKey($loginUser){
+        $reponse = $this->bdd->query("SELECT * FROM utilisateur WHERE login='$loginUser'");
         $donnees = $reponse->fetch();
 
         return $donnees['theKey'];

@@ -50,12 +50,12 @@ class Engine
         }
     }
 
-    function valideSession($idUser){
+    function valideSession($loginUser, $tokenUser){
 
         $authentificaton=new Authentification();
-        $key = $this->manageBdd->selectKey($idUser); //id de session utilisateur
+        $key = $this->manageBdd->selectKey($loginUser); //id de session utilisateur
         
-        if($authentificaton->analyseToken($_SESSION['tokenUser'],$key)){
+        if($authentificaton->analyseToken($tokenUser,$key)){
         	// Si le token est expiré on kill la session
         	//session_destroy();
         	return true;

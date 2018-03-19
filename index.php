@@ -13,28 +13,38 @@ include ("Vol/ManageBDD.php");
 include ("Vol/Engine.php");
 include ("Vol/Authentification.php");
 
-
-
 $engine = new Engine();
 
-/*
+if(isset($_GET['token']) && $_GET['token'] != NULL && isset($_GET['login']) && $_GET['login'] != NULL){
 
-if(!isset($_SESSION['login']) || $_SESSION['login'] == NULL){
-    header('location: Agregation/Login.php');
+
+	$login = htmlspecialchars($_GET['login']);
+	$token = htmlspecialchars($_GET['token']);
+
+	if($engine->valideSession($login, $token)){
+
+		// Code de l'api
+
+		if(isset($_GET['function']) && $_GET['function'] == "listallvol")
+		{
+			$engine->listerVols("","","","");
+		}
+
+	}
+	else{
+
+		$etatConnexion = "Token expiré";
+	    $array_to_json = array('errortoken' => $etatConnexion);
+	    echo json_encode($array_to_json);
+
+	}
+
 }
+else{
 
-if(!$engine->valideSession($_SESSION['id'])){
-    header('location: Agregation/Login.php?token=expire');
-}
-
-*/
-
-//$engine->valideSession();
-
-
-if(isset($_GET['function']) && $_GET['function'] == "listallvol")
-{
-	$engine->listerVols("","","","");
+	$etatConnexion = "Veuillez envoyer votre token et votre nom d'utilisateur";
+    $array_to_json = array('error' => $etatConnexion);
+    echo json_encode($array_to_json);
 }
 
 

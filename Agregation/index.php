@@ -6,32 +6,36 @@ session_start();
  * Date: 14/03/2018
  * Time: 14:07
  */
-include ("Vol/Engine.php");
 
-// Check si l'utilisateur est connecté : 
-    if(!isset($_SESSION['login']) || $_SESSION['login'] == NULL){
-            header('location: login.php');
-        }
 
-    if(!$engine->valideSession($_SESSION['id'])){
-        header('location: Agregation/login.php?token=expire');
-    }
+if(!isset($_SESSION['tokenUser']) || $_SESSION['tokenUser'] == NULL || !isset($_SESSION['login']) || $_SESSION['login'] == NULL){
+
+	header('location: login.php');
+}
+
+	function checkErreur($array_from_Json){
+		if(isset($array_from_Json['error'])){
+	        echo "Erreur: ".$array_from_Json['error'];
+		}
+		if(isset($array_from_Json['errortoken'])){
+	        session_destroy(); // Si on détecte qu'il y a une erreur sur le token on detruit la session et on redirige sur la page de connexion
+	        header('location: login.php?token=expire');
+	    }
+
+	}
 
 
 	function affichertouslesvols($fonction)
 	{
-		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
+		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction."&login=".$_SESSION['login']."&token=".$_SESSION['tokenUser'];
 		
 		$jsonFromURL = file_get_contents($myURL);
-		$objFromJson = json_decode($jsonFromURL);
-		//echo $objFromJson->access_token;
+		$objFromJson = json_decode($jsonFromURL, true);
 		
-		//$myResponse = json_decode($myURL);
-		//echo "et ta mere ? ";
-		//$objFromJson = "test";
-		return $objFromJson; 
+		//print_r($myURL);
+		checkErreur($objFromJson);
 
-		//}
+		return $objFromJson; 
 	}
 
 

@@ -1,17 +1,17 @@
 <?php 
 session_start();
 
-include("../Vol/ManageBDD.php");
-include("../Vol/Authentification.php");
+include("Vol/ManageBDD.php");
+include("Vol/Authentification.php");
+include("Vol/Engine.php");
+
+header('Content-Type: application/json');
 
 $disableChamps = "";
 
 
-
-function connexion()
-{
     if (isset($_GET['login']) && $_GET['login'] != NULL && isset($_GET['pass']) && $_GET['pass'] != NULL) {
-        // Si le formmulaire à été envoyé
+        // Si les données de connexion sont envoyé
         $managebdd = new ManageBDD();
         $managebdd->connection();
 
@@ -21,30 +21,42 @@ function connexion()
         $connectionuser = $managebdd->userConnection($user, $password);
 
         if ($connectionuser) {
+
+            $array_to_json = array('token' => $connectionuser);
+            echo json_encode($array_to_json);
+
+
             $etatConnexion = "Vous etes connecté " . $_SESSION['login'] . "!";
             $disableChamps = "disabled";
 
         } else {
             $etatConnexion = "Veuillez vérifier vos identifiants, on ne vous trouve pas dans la base de données...";
+            $array_to_json = array('error' => $etatConnexion);
+            echo json_encode($array_to_json);
         }
 
     }
 
 
-    if (isset($_SESSION['login']) && $_SESSION['login'] != NULL) {
-        //header('Content-Type: application/json');
-        header('location: index.php');
+// Verifier la validité du token :
+    if (isset($_GET['login']) && $_GET['login'] != NULL && isset($_GET['token']) && $_GET['token'] != NULL) {
+        
+        $engine = new Engine();
+
+        if(!$engine->valideSession(htmlentities($_GET['login']), htmlentities($_GET['token']))){
+            $etatConnexion = "Token expiré";
+            $array_to_json = array('errortoken' => $etatConnexion);
+            echo json_encode($array_to_json);
+        }
+        else{
+            $array_to_json = array('token' => $_GET['token']);
+            echo json_encode($array_to_json);
+        }
 
 
-        $array_to_json = array('token' => $_SESSION['tokenUser']);
-        echo json_encode($array_to_json);
-
-        $etatConnexion = "Vous etes déjà connecté " . $_SESSION['login'] . " !";
-        $disableChamps = "disabled";
-    } else {
-        $etatConnexion = "Veuillez vous connecter";
     }
-}
+
+
 
 ?>
 
