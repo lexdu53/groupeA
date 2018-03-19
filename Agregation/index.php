@@ -7,26 +7,54 @@ session_start();
  * Time: 14:07
  */
 
+
 // Check si l'utilisateur est connecté : 
-    if(!isset($_SESSION['login']) || $_SESSION['login'] == NULL){
-            header('location: login.php');
-        }
 
 
-	function affichertouslesvols($fonction)
+function connexionWebservices($user, $password)
 	{
+
+		//CURL PHP POUR ENVOYER LES LOGINS
+
+
 		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
 		
+
+		//HTTPS AVEC FILE_GET_CONTENTS, JE CROIS CA MARCHE PAS
 		$jsonFromURL = file_get_contents($myURL);
 		$objFromJson = json_decode($jsonFromURL);
 		//echo $objFromJson->access_token;
 		
+echo $jsonFromURL;
+
 		//$myResponse = json_decode($myURL);
 		//echo "et ta mere ? ";
 		//$objFromJson = "test";
 		return $objFromJson; 
+	}
 
-		//}
+
+
+	function affichertouslesvols($fonction)
+	{
+
+		//CURL PHP POUR ENVOYER LES LOGINS
+
+
+		$myURL = "https://www.arnaudride.fr/webservices/tp/index.php?function=".$fonction;
+		
+
+		//HTTPS AVEC FILE_GET_CONTENTS, JE CROIS CA MARCHE PAS
+		$jsonFromURL = file_get_contents($myURL);
+		$objFromJson = json_decode($jsonFromURL);
+		//echo $objFromJson->access_token;
+		
+echo $jsonFromURL;
+
+		//$myResponse = json_decode($myURL);
+		//echo "et ta mere ? ";
+		//$objFromJson = "test";
+		return $objFromJson; 
 	}
 
 

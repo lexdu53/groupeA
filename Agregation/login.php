@@ -5,6 +5,7 @@ include ("../Vol/ManageBDD.php");
 include ("../Vol/Authentification.php");
 
 $disableChamps = "";
+if(isset($_GET['token']) && $_GET['token'] == "expire") {session_destroy();}
 
 if(isset($_POST['login']) && $_POST['login'] != NULL && isset($_POST['pass']) && $_POST['pass'] != NULL)
 {
