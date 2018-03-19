@@ -1,0 +1,9 @@
+Documentation du web service Air IIA: 
+
+Authentification : 
+https://www.arnaudride.fr/webservices/tp/Login.php?login=".$_POST['login']."&pass=".$_POST['pass'];
+
+
+Acces au web service : 
+
+
