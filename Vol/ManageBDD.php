@@ -57,13 +57,22 @@ class ManageBDD
     /**
      *
      */
-    function selectVolById($id,$nbPlaces,$utilisateur_id){
+    function getUserId($login){
+        $reponse = $this->bdd->query("SELECT * FROM utilisateur WHERE login = '$login'");
+        $donnees = $reponse->fetch();
+        return $donnees['id'];
+        $reponse->closeCursor(); // Termine le traitement de la requête
 
-        if (($this->getPlaceLibre($id)-$nbPlaces) >= 0) {
+    }
+
+    function selectVolById($idVol,$nbPlaces,$login){
+        $utilisateur_id = $this->getUserId($login);
+
+        if (($this->getPlaceLibre($idVol)-$nbPlaces) >= 0) {
 
             $requete = $this->bdd->prepare("INSERT INTO reservation (nbplace, vol_id,utilisateur_id) VALUES (:nbplace, :vol_id, :utilisateur_id)");
             $requete->bindParam(':nbplace',$nbPlaces);
-            $requete->bindParam(':vol_id',$id);
+            $requete->bindParam(':vol_id',$idVol);
             $requete->bindParam(':utilisateur_id',$utilisateur_id);
             if(($requete->execute())==0){
                 return 3;
@@ -78,8 +87,6 @@ class ManageBDD
 
         $reponse = $this->bdd->query("SELECT * FROM reservation WHERE vol_id = $idVol");
         $nbPlaceReserve = 0;
-
-        $array_final = array();
         while ($donnees = $reponse->fetch())
         {
             $nbPlaceReserve = $nbPlaceReserve + $donnees['nbplace'];
@@ -108,13 +115,15 @@ class ManageBDD
         while ($donnees = $reponse->fetch())
         {
             $nbPlaceRestante = $donnees['nbplace'] - $this->getPlaceReserve($donnees['id']);
+            if($nbPlaceRestante == 0){$reservationDispo = "Complet";}
+            else{$reservationDispo = $nbPlaceRestante." / ".$donnees['nbplace'];}
             $array_to_json = array(
                 'ID' => $donnees['id'],
                 'Ville départ' => $donnees['villedepart'],
                 'Ville arrivé' => $donnees['villearrive'],
                 'Date départ' => $donnees['datedepart'],
                 'Date arrivé' => $donnees['datearrive'],
-                'Places restante / Nombre de places total' => $nbPlaceRestante." / ".$donnees['nbplace'],
+                'Places restante / Nombre de places total' => $reservationDispo,
                 'Prix' => $donnees['prix']
             );
             array_push($array_final, $array_to_json);
@@ -133,13 +142,15 @@ class ManageBDD
         while ($donnees = $reponse->fetch())
         {
             $nbPlaceRestante = $donnees['nbplace'] - $this->getPlaceReserve($donnees['id']);
+            if($nbPlaceRestante == 0){$reservationDispo = "Complet";}
+            else{$reservationDispo = $nbPlaceRestante." / ".$donnees['nbplace'];}
             $array_to_json = array(
                 'ID' => $donnees['id'],
                 'Ville départ' => $donnees['villedepart'],
                 'Ville arrivé' => $donnees['villearrive'],
                 'Date départ' => $donnees['datedepart'],
                 'Date arrivé' => $donnees['datearrive'],
-                'Places restante / Nombre de places total' => $nbPlaceRestante." / ".$donnees['nbplace'],
+                'Places restante / Nombre de places total' => $reservationDispo,
                 'Prix' => $donnees['prix']
             );
             array_push($array_final, $array_to_json);
@@ -156,13 +167,15 @@ class ManageBDD
         while ($donnees = $reponse->fetch())
         {
             $nbPlaceRestante = $donnees['nbplace'] - $this->getPlaceReserve($donnees['id']);
+            if($nbPlaceRestante == 0){$reservationDispo = "Complet";}
+            else{$reservationDispo = $nbPlaceRestante." / ".$donnees['nbplace'];}
             $array_to_json = array(
                 'ID' => $donnees['id'],
                 'Ville départ' => $donnees['villedepart'],
                 'Ville arrivé' => $donnees['villearrive'],
                 'Date départ' => $donnees['datedepart'],
                 'Date arrivé' => $donnees['datearrive'],
-                'Places restante / Nombre de places total' => $nbPlaceRestante." / ".$donnees['nbplace'],
+                'Places restante / Nombre de places total' => $reservationDispo,
                 'Prix' => $donnees['prix']
             );
             array_push($array_final, $array_to_json);

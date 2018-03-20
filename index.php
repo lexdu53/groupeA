@@ -38,8 +38,7 @@ if(isset($_GET['token']) && $_GET['token'] != NULL && isset($_GET['login']) && $
 
         if(isset($_GET['function']) && $_GET['function'] == "reserv_vol" && isset($_GET['id']) && isset($_GET['NbPlaces']))
         {
-            $utilisateur_id=1;
-            $myURL=$engine->reserver($_GET['id'],$_GET['NbPlaces'], $utilisateur_id);
+            $myURL=$engine->reserver($_GET['id'], $_GET['NbPlaces'], $_GET['login']);
             return $myURL;
         }
 

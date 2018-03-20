@@ -41,28 +41,21 @@ class Engine
     /**
      * @param $id
      */
-    function reserver($id,$nbPlaces,$utilisateur_id){
-
-
-
-        switch ($this->manageBdd->selectVolById($id,$nbPlaces,$utilisateur_id)){
+    function reserver($idVol,$nbPlaces,$login){
+        switch ($this->manageBdd->selectVolById($idVol,$nbPlaces,$login)){
             case 1:
-                echo "Réservation OK";
+                return "Réservation OK";
                 break;
 
             case 2:
-                echo "Le nombre de place n'est pas disponible";
+                return "Le nombre de place n'est pas disponible";
                 break;
 
             case 3:
-                echo "Erreur exec";
+                return "Erreur exec";
                 break;
             default:
-                echo "case default in switch";
-
-
-
-
+                return "Erreur";
         }
     }
 
