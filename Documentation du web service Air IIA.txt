@@ -1,9 +1,41 @@
 Documentation du web service Air IIA: 
 
-Authentification : 
-https://www.arnaudride.fr/webservices/tp/Login.php?login=".$_POST['login']."&pass=".$_POST['pass'];
+Authentification au Webservice: 
+URL de connexion : 
+	https://www.arnaudride.fr/webservices/tp/Login.php?login=Username&pass=password
+
+	Cette url retourne le token au format Json si les informations sont correctes.
+	ou bien une erreur au format Json
+
+	Le token est valable à une durée de vie que nous avons défint à 20min par defaut. 
 
 
-Acces au web service : 
 
+
+Acces au fonction du Webservice une fois connecté : 
+	
+	Afficher tous les vols à partir de la date actuelle : 
+	https://www.arnaudride.fr/webservices/tp/index.php?function=listallvol&login=Username&token=TokenUser;
+
+	Retourne un json contenant toutes les informations des vols disponible
+
+
+	Afficher tous les vols en partance d'une ville A vers une ville B à partir de la date actuelle : 
+	https://www.arnaudride.fr/webservices/tp/index.php?function=listallvol&login=Username&token=TokenUser&villeDepart=LaVilleDeDepart&villeArrive=LaVilleDarrive
+
+	Retourne un json contenant toutes les informations des vols disponible
+
+
+	Effectuer une reservation sur un vol:
+	https://www.arnaudride.fr/webservices/tp/index.php?function=listallvol&login=Username&token=TokenUser&id=idDuVol&NbPlaces=LeNombreDePlaces
+
+	Retourne un code correspondant à une erreur ou bien à la confirmation de la reservation
+
+
+	
+
+
+
+
+	
 
